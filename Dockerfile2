@@ -1,2 +1,0 @@
-FROM scratch AS result
-COPY --from=6ca366bdc5eb /audioserve/target/aarch64-unknown-linux-gnu/debug/audioserve /

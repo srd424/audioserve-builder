@@ -13,15 +13,10 @@ RUN apt-get install -y --no-install-recommends \
                 libssl-dev:arm64 \
                 libavformat-dev:arm64
 RUN rm -f /var/cache/apt/archives/*.deb
-
-FROM buildenv AS build
-WORKDIR /
-RUN git clone https://github.com/izderadicka/audioserve.git
-WORKDIR /audioserve
-ARG PKG_CONFIG_ALLOW_CROSS=1
 RUN mkdir /root/.cargo
 COPY cargo-config /root/.cargo/config
-RUN cargo build --target=aarch64-unknown-linux-gnu
+COPY cargo-config /cargo-config
+COPY build.sh /
+RUN chmod a+x /build.sh
+CMD /build.sh
 
-FROM scratch AS result
-COPY --from=build /audioserve/target/aarch64-unknown-linux-gnu/debug/audioserve /
