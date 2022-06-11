@@ -11,13 +11,23 @@ jobs:
   builder-build:
     runs-on: ubuntu-20.04
     steps:
+    - name: cache build cache
+      uses: actions/cache@v3
+      with:
+        path: result
+        key: audioserve
     - name: Docker pull
       run: docker pull ${{ env.REGISTRY }}/${{ env.BUILDER_IMAGE }}
     - name: Docker run
-      run: mkdir ./result && docker run -v $PWD/result:/result ${{ env.REGISTRY }}/${{ env.BUILDER_IMAGE }}
+      run: mkdir -p ./result ./build && docker run -v $PWD/build:/build -v $PWD/result:/result ${{ env.REGISTRY }}/${{ env.BUILDER_IMAGE }}
     - name: save results
       uses: actions/upload-artifact@v3
       with:
         name: audioserve
         path: result
-    
+    - name: zip results
+      run: zip -r audioserve_aarch64.zip result
+    - name: Release static binary tar
+      uses: softprops/action-gh-release@v1
+      with:
+        files: audioserve_aarch64.zip
