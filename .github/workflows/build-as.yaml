@@ -8,7 +8,7 @@ env:
   BUILDER_IMAGE: srd424/audioserve-builder
   
 jobs:
-  builder-build:
+  build:
     runs-on: ubuntu-20.04
     steps:
     - name: cache build cache
@@ -30,12 +30,9 @@ jobs:
     - name: Generate release tag
       id: tag
       run: |
-        echo "::set-output name=release_tag::UserBuild_$(date +"%Y.%m.%d_%H-%M")"
+        echo "::set-output name=release_tag::build_$(date +"%Y%m%d_%H%M")"
     - name: Release zip
       uses: softprops/action-gh-release@v1
       with:
         files: audioserve_aarch64.zip
         tag_name: ${{ steps.tag.outputs.release_tag }}
-    - name: Fix cache permissions
-      run: ls -lR ./build; chmod a+rX ./build
-      
