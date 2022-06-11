@@ -14,4 +14,10 @@ jobs:
     - name: Docker pull
       run: docker pull ${{ env.REGISTRY }}/${{ env.BUILDER_IMAGE }}
     - name: Docker run
-      run: docker run ${{ env.REGISTRY }}/${{ env.BUILDER_IMAGE }}
+      run: mkdir ./result && docker run -v $PWD/result:/result ${{ env.REGISTRY }}/${{ env.BUILDER_IMAGE }}
+    - name: save results
+      uses: actions/upload-artifact@v3
+      with:
+        name: audioserve
+        path: result
+    
