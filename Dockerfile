@@ -1,6 +1,6 @@
 FROM ubuntu:jammy AS buildenv
 ARG apt_proxy
-RUN [ -n "$apt_proxy" ] && echo "Acquire::http::proxy \"$apt_proxy\";" >/etc/apt/apt.conf.d/02proxy
+RUN { [ -n "$apt_proxy" ] && echo "Acquire::http::proxy \"$apt_proxy\";" >/etc/apt/apt.conf.d/02proxy; } || true
 COPY sources.list /etc/apt/sources.list
 RUN dpkg --add-architecture arm64 && \
         apt-get update || true
