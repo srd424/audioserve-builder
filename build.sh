@@ -26,4 +26,7 @@ npm run build
 mkdir -p /result/client
 cp -av dist /result/client
 
+ls -lR /build
+chmod a+rX -R /build
+
 exit 0
