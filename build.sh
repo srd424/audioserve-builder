@@ -9,9 +9,7 @@ git clone https://github.com/izderadicka/audioserve.git
 cd audioserve
 
 export PKG_CONFIG_ALLOW_CROSS=1
-#export CARGO_TARGET_DIR=/target
 export CARGO_TARGET_DIR=/build/target
-#export CARGO_HOME=/cargo
 export CARGO_HOME=/build/cargo
 export npm_config_cache=/build/npm
 
@@ -26,7 +24,6 @@ npm run build
 mkdir -p /result/client
 cp -av dist /result/client
 
-ls -lR /build
 chmod a+rX -R /build
 
 exit 0
