@@ -1,0 +1,17 @@
+name: build audioserve
+
+on:
+  workflow_dispatch:
+  
+env:
+  REGISTRY: ghcr.io
+  BUILDER_IMAGE: srd424/audioserve-builder
+  
+jobs:
+  builder-build:
+    runs-on: ubuntu-20.04
+    steps:
+    - name: Docker pull
+      run: docker pull ${{ env.REGISTRY }}/${{ BUILDER_IMAGE }}
+    - name: Docker run
+      run: docker run ${{ env.REGISTRY }}/${{ BUILDER_IMAGE }}
