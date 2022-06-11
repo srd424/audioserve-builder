@@ -1,0 +1,14 @@
+name: build builder
+
+on:
+  workflow_dispatch:
+  
+jobs:
+  builder-build:
+    runs-on: ubuntu-22.04
+    steps:
+    - name: Checkout source
+      uses: actions/checkout@v2
+    - name: Build with docker
+      run: docker build --tag srd424/audioserve-builder .
+    
