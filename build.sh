@@ -3,6 +3,8 @@
 set -e
 set -x
 
+[ -z "$CARGO_RELEASE" ] && CARGO_RELEASE=release
+
 cd /
 rm -r -f /audioserve
 git clone https://github.com/izderadicka/audioserve.git
@@ -15,8 +17,8 @@ export npm_config_cache=/build/npm
 
 mkdir -p $CARGO_TARGET_DIR $CARGO_HOME $npm_config_cache
 cp /cargo-config /$CARGO_HOME/config
-cargo build --target=aarch64-unknown-linux-gnu
-cp $CARGO_TARGET_DIR/aarch64-unknown-linux-gnu/debug/audioserve /result
+cargo build --target=aarch64-unknown-linux-gnu --${CARGO_RELEASE}
+cp $CARGO_TARGET_DIR/aarch64-unknown-linux-gnu/${CARGO_RELEASE}/audioserve /result
 
 cd client
 npm install
