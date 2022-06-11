@@ -15,6 +15,7 @@ export CARGO_TARGET_DIR=/build/target
 export CARGO_HOME=/build/cargo
 export npm_config_cache=/build/npm
 
+mkdir -p $CARGO_TARGET_DIR $CARGO_HOME $npm_config_cache
 cp /cargo-config /$CARGO_HOME/config
 cargo build --target=aarch64-unknown-linux-gnu
 cp $CARGO_TARGET_DIR/aarch64-unknown-linux-gnu/debug/audioserve /result
