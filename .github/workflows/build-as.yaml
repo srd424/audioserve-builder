@@ -12,6 +12,6 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
     - name: Docker pull
-      run: docker pull ${{ env.REGISTRY }}/${{ BUILDER_IMAGE }}
+      run: docker pull ${{ env.REGISTRY }}/${{ env.BUILDER_IMAGE }}
     - name: Docker run
-      run: docker run ${{ env.REGISTRY }}/${{ BUILDER_IMAGE }}
+      run: docker run ${{ env.REGISTRY }}/${{ env.BUILDER_IMAGE }}
