@@ -37,5 +37,5 @@ jobs:
         files: audioserve_aarch64.zip
         tag_name: ${{ steps.tag.outputs.release_tag }}
     - name: Fix cache permissions
-      run: chmod a+rX ./build
+      run: ls -lR ./build; chmod a+rX ./build
       
