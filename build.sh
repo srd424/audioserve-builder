@@ -3,8 +3,10 @@
 set -e
 set -x
 
-[ -z "$CARGO_RELEASE" ] && CARGO_RELEASE=release
-[ "$CARGO_RELEASE" = "debug" ] && CARGO_RELEASE=dev
+[ -z "$CARGO_PROFILE" ] && CARGO_PROFILE=release
+[ "$CARGO_PROFILE" = "debug" ] && CARGO_PROFILE=dev
+CARGO_RESULT=release
+[ "$CARGO_PROFILE" = "dev" ] && CARGO_RESULT=debug
 
 cd /src
 
@@ -15,8 +17,8 @@ export npm_config_cache=/build/npm
 
 mkdir -p $CARGO_TARGET_DIR $CARGO_HOME $npm_config_cache
 cp /cargo-config /$CARGO_HOME/config
-cargo build --target=aarch64-unknown-linux-gnu --profile ${CARGO_RELEASE}
-cp $CARGO_TARGET_DIR/aarch64-unknown-linux-gnu/${CARGO_RELEASE}/audioserve /result
+cargo build --target=aarch64-unknown-linux-gnu --profile ${CARGO_PROFILE}
+cp $CARGO_TARGET_DIR/aarch64-unknown-linux-gnu/${CARGO_RESULT}/audioserve /result
 
 cd client
 npm --no-save install
