@@ -6,6 +6,7 @@ on:
 env:
   REGISTRY: ghcr.io
   BUILDER_IMAGE: srd424/audioserve-builder
+  BUILD_TYPE: release
   
 jobs:
   build:
@@ -15,11 +16,19 @@ jobs:
       uses: actions/cache@v3
       with:
         path: build
-        key: audioserve
+        key: as0-${{ env.BUILD_TYPE }}
+        restore-keys: |
+          as0-
+          as
+    - name: checkout audioserve source
+      uses: actions/checkout@v3
+      with:
+        repository: 'izderadicka/audioserve'
+        path: audioserve-src
     - name: Docker pull
       run: docker pull ${{ env.REGISTRY }}/${{ env.BUILDER_IMAGE }}
     - name: Docker run
-      run: mkdir -p ./result ./build && docker run -v $PWD/build:/build -v $PWD/result:/result ${{ env.REGISTRY }}/${{ env.BUILDER_IMAGE }}
+      run: mkdir -p ./result ./build && docker run -v ${GITHUB_WORKSPACE}/audioserve-src:/src:ro -v $PWD/build:/build -v $PWD/result:/result -e CARGO_RELEASE=${{ env.BUILD_TYPE }} ${{ env.REGISTRY }}/${{ env.BUILDER_IMAGE }}
 #    - name: save results
 #      uses: actions/upload-artifact@v3
 #      with:
