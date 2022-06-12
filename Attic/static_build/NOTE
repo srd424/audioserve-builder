@@ -1,0 +1,10 @@
+static building isn't possible as some ffmpeg dependencies in Ubuntu aren't built statically
+e.g. libchromaprint
+
+Also, this bug makes it very hard:
+
+https://github.com/rust-lang/pkg-config-rs/issues/102
+
+needed stupid hacks like ln -s /usr /not and then doing search replace in pkgconfig/*.pc
+
+see https://pinboard.in/u:phaedrus424/tabs/401050/ for clues
