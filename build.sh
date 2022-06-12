@@ -5,10 +5,7 @@ set -x
 
 [ -z "$CARGO_RELEASE" ] && CARGO_RELEASE=release
 
-cd /
-rm -r -f /audioserve
-git clone https://github.com/izderadicka/audioserve.git
-cd audioserve
+cd /src
 
 export PKG_CONFIG_ALLOW_CROSS=1
 export CARGO_TARGET_DIR=/build/target

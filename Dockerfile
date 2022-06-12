@@ -6,7 +6,7 @@ RUN dpkg --add-architecture arm64 && \
         apt-get update || true
 RUN apt-get install -y --no-install-recommends eatmydata
 RUN eatmydata apt-get install -y --no-install-recommends \
-                git ca-certificates \
+                ca-certificates \
                 cargo \
                 libstd-rust-dev:arm64 \
                 gcc-aarch64-linux-gnu \
