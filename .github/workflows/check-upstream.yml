@@ -16,7 +16,7 @@ jobs:
         id: getrel
         run: |
           ref=$(curl -sL https://api.github.com/repos/izderadicka/audioserve/releases/latest | 
-          jq -r ".tag_name") && echo $ref > release-versions/swagger-ui-latest.txt && 
+          jq -r ".tag_name") && echo $ref > upsteam-latest.txt && 
           run: echo "::set-output name=ref::$ref"
       - name: Check for modified files
         id: git-check
