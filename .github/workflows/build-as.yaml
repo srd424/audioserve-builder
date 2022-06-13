@@ -8,6 +8,13 @@ on:
         required: true
         default: 'master'
         type: string
+  workflow_call:
+    inputs:
+      ref:
+        description: 'git reference to checkout and build'
+        required: true
+        default: 'master'
+        type: string
   
 env:
   REGISTRY: ghcr.io
