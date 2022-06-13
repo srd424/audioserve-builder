@@ -24,7 +24,9 @@ jobs:
       - name: Commit latest release version
         if: steps.git-check.outputs.modified == 'true'
         run: |
-          git commit --author "A Bot <bot@bot>" -am "New upstream version"
+          git config --global user.name 'Your Name'
+          git config --global user.email 'your-email@users.noreply.github.com'
+          git commit -am "New upstream version"
           git push
           
   build-binary:
@@ -40,3 +42,6 @@ jobs:
     if: needs.get-version.outputs.modified == 'true'
     with:
       tag: ${{ needs.get-version.outputs.ref }}
+
+# vim: set ts=2 et:
+
