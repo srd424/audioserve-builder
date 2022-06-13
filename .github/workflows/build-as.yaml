@@ -18,39 +18,40 @@ jobs:
   build:
     runs-on: ubuntu-20.04
     steps:
-#    - name: cache build cache
-#      uses: actions/cache@v3
-#      with:
-#        path: build
-#        key: as0-${{ env.BUILD_TYPE }}
-#        restore-keys: |
-#          as0-
-#          as
     - name: checkout audioserve source
       uses: actions/checkout@v3
       with:
         repository: 'izderadicka/audioserve'
         path: audioserve-src
         ref: ${{ inputs.ref }}
-    - name: get commit
-      run: cd audioserve-src && git rev-parse --short HEAD
-#    - name: Docker pull
-#      run: docker pull ${{ env.REGISTRY }}/${{ env.BUILDER_IMAGE }}
-#    - name: Docker run
-#      run: mkdir -p ./result ./build && docker run -v ${GITHUB_WORKSPACE}/audioserve-src:/src -v $PWD/build:/build -v $PWD/result:/result -e CARGO_PROFILE=${{ env.BUILD_TYPE }} ${{ env.REGISTRY }}/${{ env.BUILDER_IMAGE }}
-##    - name: save results
-##      uses: actions/upload-artifact@v3
-##      with:
-##        name: audioserve
-##        path: result
-#    - name: zip results
-#      run: zip -r audioserve_aarch64.zip result
-#    - name: Generate release tag
-#      id: tag
-#      run: |
-#        echo "::set-output name=release_tag::build_$(date +"%Y%m%d_%H%M")"
-#    - name: Release zip
-#      uses: softprops/action-gh-release@v1
-#      with:
-#        files: audioserve_aarch64.zip
-#        tag_name: ${{ steps.tag.outputs.release_tag }}
+    - name: generate release name
+      id: genrel
+      run: |
+        if [ "${{ inputs.ref }}" = "master" ]; then
+          rev=$(cd audioserve-src && git rev-parse --short HEAD)
+          echo "::set-output name=release_ref::trunk-$rev"
+          echo "::set-output name=release_tag::trunk-$rev_$(date +%y%m%d%H%M)"
+        else
+          echo "::set-output name=release_ref::${{ inputs.ref }}"
+          echo "::set-output name=release_tag::${{ inputs.ref }}_$(date +%y%m%d%H%M)"
+        fi
+    - name: cache build cache
+      uses: actions/cache@v3
+      with:
+        path: build
+        key: as0-${{ env.BUILD_TYPE }}-${{ steps.genrel.outputs.release_ref }}
+        restore-keys: |
+          as0-${{ env.BUILD_TYPE }}-
+          as0-
+          as
+    - name: Docker pull
+      run: docker pull ${{ env.REGISTRY }}/${{ env.BUILDER_IMAGE }}
+    - name: Docker run
+      run: mkdir -p ./result ./build && docker run -v ${GITHUB_WORKSPACE}/audioserve-src:/src -v $PWD/build:/build -v $PWD/result:/result -e CARGO_PROFILE=${{ env.BUILD_TYPE }} ${{ env.REGISTRY }}/${{ env.BUILDER_IMAGE }}
+    - name: zip results
+      run: zip -r audioserve_aarch64.zip result
+    - name: Release zip
+      uses: softprops/action-gh-release@v1
+      with:
+        files: audioserve_aarch64.zip
+        tag_name: ${{ steps.genrel.outputs.release_tag }}
