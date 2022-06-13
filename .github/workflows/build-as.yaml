@@ -2,6 +2,12 @@ name: build audioserve
 
 on:
   workflow_dispatch:
+    inputs:
+      ref:
+        description: 'git reference to checkout and build'
+        required: true
+        default: 'master'
+        type: string
   
 env:
   REGISTRY: ghcr.io
@@ -12,19 +18,20 @@ jobs:
   build:
     runs-on: ubuntu-20.04
     steps:
-    - name: cache build cache
-      uses: actions/cache@v3
-      with:
-        path: build
-        key: as0-${{ env.BUILD_TYPE }}
-        restore-keys: |
-          as0-
-          as
+#    - name: cache build cache
+#      uses: actions/cache@v3
+#      with:
+#        path: build
+#        key: as0-${{ env.BUILD_TYPE }}
+#        restore-keys: |
+#          as0-
+#          as
     - name: checkout audioserve source
       uses: actions/checkout@v3
       with:
         repository: 'izderadicka/audioserve'
         path: audioserve-src
+        ref: ${{ inputs.ref }}
     - name: get commit
       run: cd audioserve-src && git rev-parse --short HEAD
 #    - name: Docker pull
