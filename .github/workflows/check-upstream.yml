@@ -28,14 +28,14 @@ jobs:
           
   build-binary:
     needs: get-version
-    uses: ./.github/workflows/build-as
+    uses: ./.github/workflows/build-as.yaml
     if: needs.get-version.outputs.modified == 'true'
     with:
       ref: ${{ needs.get-version.outputs.ref }}
   
   build-docker:
     needs: [get-version, build-binary]
-    uses: srd424/audioserve-docker/.github/workflows/build-docker@master
+    uses: srd424/audioserve-docker/.github/workflows/build-docker.yaml@master
     if: needs.get-version.outputs.modified == 'true'
     with:
       tag: ${{ needs.get-version.outputs.ref }}
