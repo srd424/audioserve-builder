@@ -27,7 +27,7 @@ jobs:
     - name: generate release name
       id: genrel
       run: |
-	set -e
+        set -e
         if [ "${{ inputs.ref }}" = "master" ]; then
           rev=$(cd audioserve-src && git rev-parse --short HEAD)
           echo "::set-output name=release_ref::trunk-$rev"
@@ -56,3 +56,5 @@ jobs:
       with:
         files: audioserve_aarch64.zip
         tag_name: ${{ steps.genrel.outputs.release_tag }}
+
+# vim: set ts=2 et:
