@@ -36,12 +36,12 @@ jobs:
     with:
       ref: ${{ needs.get-version.outputs.ref }}
   
-  build-docker:
-    needs: [get-version, build-binary]
-    uses: srd424/audioserve-docker/.github/workflows/build-docker.yml@master
-    if: needs.get-version.outputs.modified == 'true'
-    with:
-      tag: ${{ needs.get-version.outputs.ref }}
+#  build-docker:
+#    needs: [get-version, build-binary]
+#    uses: srd424/audioserve-docker/.github/workflows/build-docker.yml@master
+#    if: needs.get-version.outputs.modified == 'true'
+#    with:
+#      tag: ${{ needs.get-version.outputs.ref }}
 
 # vim: set ts=2 et:
 
