@@ -36,7 +36,7 @@ jobs:
   
   build-docker:
     needs: [get-version, build-binary]
-    uses: srd424/audioserve-docker/.github/workflows/build-docker.yaml@master
+    uses: srd424/audioserve-docker/.github/workflows/build-docker.yml@master
     if: needs.get-version.outputs.modified == 'true'
     with:
       tag: ${{ needs.get-version.outputs.ref }}
