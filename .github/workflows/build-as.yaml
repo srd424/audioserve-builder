@@ -27,7 +27,7 @@ jobs:
     - name: generate release name
       id: genrel
       run: |
-        set -e
+        set -x
         if [ "${{ inputs.ref }}" = "master" ]; then
           rev=$(cd audioserve-src && git rev-parse --short HEAD)
           echo "::set-output name=release_ref::trunk-$rev"
