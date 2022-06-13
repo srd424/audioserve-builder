@@ -24,7 +24,7 @@ jobs:
       - name: Commit latest release version
         if: steps.git-check.outputs.modified == 'true'
         run: |
-          git commit -am "New upstream version"
+          git commit --author "A Bot <bot@bot>" -am "New upstream version"
           git push
           
   build-binary:
