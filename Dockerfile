@@ -20,7 +20,6 @@ RUN eatmydata apt-get install -y --no-install-recommends \
 RUN rm -f /var/cache/apt/archives/*.deb
 COPY cargo-config /cargo-config
 COPY build.sh /
-COPY bodge-deps.diff /
 RUN chmod a+x /build.sh
 CMD /build.sh
 
