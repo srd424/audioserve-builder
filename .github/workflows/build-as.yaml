@@ -20,6 +20,8 @@ env:
   REGISTRY: ghcr.io
   BUILDER_IMAGE: srd424/audioserve-builder
   BUILD_TYPE: release
+  BUILDER_TAG: ${{ github.ref_name == 'master' && 'latest' || github.ref_name }}
+
   
 jobs:
   build:
@@ -53,7 +55,7 @@ jobs:
           as0-
           as
     - name: Docker pull
-      run: docker pull ${{ env.REGISTRY }}/${{ env.BUILDER_IMAGE }}
+      run: docker pull ${{ env.REGISTRY }}/${{ env.BUILDER_IMAGE }}:${{ env.BUILDER_TAG }}
     - name: Docker run
       run: mkdir -p ./result ./build && docker run -v ${GITHUB_WORKSPACE}/audioserve-src:/src -v $PWD/build:/build -v $PWD/result:/result -e CARGO_PROFILE=${{ env.BUILD_TYPE }} ${{ env.REGISTRY }}/${{ env.BUILDER_IMAGE }}
     - name: zip results
