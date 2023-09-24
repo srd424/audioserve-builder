@@ -15,10 +15,12 @@ RUN eatmydata apt-get install -y --no-install-recommends \
                 libssl-dev \
                 libssl-dev:arm64 \
                 libavformat-dev:arm64 \
-		npm
+		npm \
+		patch
 RUN rm -f /var/cache/apt/archives/*.deb
 COPY cargo-config /cargo-config
 COPY build.sh /
+COPY bodge-deps.diff /
 RUN chmod a+x /build.sh
 CMD /build.sh
 
