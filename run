@@ -1,1 +1,2 @@
 podman run -e CARGO_PROFILE=dev -v ~/src/audioserve/src:/src:ro -v $PWD/build-cache:/build -v $PWD/result:/result ad622705a18e4929863b40c0cc92328461c2bf0d38cb5232be4f8c73b2de57b9
+podman run -e CARGO_PROFILE=dev -v $PWD/fixups:/fixups:ro -v ~/src/audioserve/src:/src:ro -v $PWD/build-cache:/build -v $PWD/result:/result 3670a35f57e1
