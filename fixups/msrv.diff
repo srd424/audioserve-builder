@@ -1,0 +1,14 @@
+diff --git a/Cargo.toml b/Cargo.toml
+index 0096273..2040661 100644
+--- a/Cargo.toml
++++ b/Cargo.toml
+@@ -3,7 +3,7 @@ name = "audioserve"
+ version = "0.27.0"
+ authors = ["Ivan <ivan.zderadicka@gmail.com>"]
+ edition = "2021"
+-rust-version = "1.70"
++rust-version = "1.66"
+ 
+ [workspace]
+ members = ["crates/*"]
+
