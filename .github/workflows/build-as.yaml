@@ -27,6 +27,8 @@ jobs:
   build:
     runs-on: ubuntu-20.04
     steps:
+    - name: Checkout builder repo inc fixups
+      uses: actions/checkout@v2
     - name: checkout audioserve source
       uses: actions/checkout@v3
       with:
@@ -57,7 +59,10 @@ jobs:
     - name: Docker pull
       run: docker pull ${{ env.REGISTRY }}/${{ env.BUILDER_IMAGE }}:${{ env.BUILDER_TAG }}
     - name: Docker run
-      run: mkdir -p ./result ./build && docker run -v ${GITHUB_WORKSPACE}/audioserve-src:/src -v $PWD/build:/build -v $PWD/result:/result -e CARGO_PROFILE=${{ env.BUILD_TYPE }} ${{ env.REGISTRY }}/${{ env.BUILDER_IMAGE }}:${{ env.BUILDER_TAG }}
+      run: mkdir -p ./result ./build && \
+        docker run -v ${GITHUB_WORKSPACE}/audioserve-src:/src -v $PWD/build:/build \
+          -v $PWD/result:/result -v $PWD/fixups:/fixups -e CARGO_PROFILE=${{ env.BUILD_TYPE }} \
+          ${{ env.REGISTRY }}/${{ env.BUILDER_IMAGE }}:${{ env.BUILDER_TAG }}
     - name: zip results
       run: zip -r audioserve_aarch64.zip result
     - name: Release zip
