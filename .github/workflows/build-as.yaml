@@ -21,7 +21,6 @@ env:
   BUILDER_IMAGE: srd424/audioserve-builder
   BUILD_TYPE: release
   BUILDER_TAG: ${{ github.ref_name == 'master' && 'latest' || github.ref_name }}
-  OUTPUT_DIR: ${{ env.BUILD_TYPE == 'dev' && 'debug' || 'release' }}
   
 jobs:
   build:
@@ -65,6 +64,7 @@ jobs:
           as
     - name: build with cross
       run: |
+        export OUTPUT_DIR=${{ env.BUILD_TYPE == 'dev' && 'debug' || 'release' }} && \
         mkdir -p ./result ./build && \
         cd audioserve-src && \
         echo -e '[build]\npre-build = [\n  "dpkg --add-architecture $CROSS_DEB_ARCH",\n  "apt-get update && apt-get --assume-yes install libavformat-dev:$CROSS_DEB_ARCH"\n]' >Cross.toml && \
