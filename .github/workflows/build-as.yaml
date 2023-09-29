@@ -34,7 +34,7 @@ jobs:
 #          https://raw.githubusercontent.com/cargo-bins/cargo-binstall/main/install-from-binstall-release.sh | \
 #          bash
     - name: install cross
-      run: cargo install -y cross
+      run: cargo install cross
     - name: checkout audioserve source
       uses: actions/checkout@v3
       with:
