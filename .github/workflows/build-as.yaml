@@ -21,14 +21,21 @@ env:
   BUILDER_IMAGE: srd424/audioserve-builder
   BUILD_TYPE: release
   BUILDER_TAG: ${{ github.ref_name == 'master' && 'latest' || github.ref_name }}
-
+  OUTPUT_DIR: ${{ env.BUILD_TYPE == 'dev' && 'debug' || 'release' }}
   
 jobs:
   build:
     runs-on: ubuntu-20.04
     steps:
-    - name: Checkout builder repo inc fixups
-      uses: actions/checkout@v2
+    - name: install rustup
+      run: curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+    - name: install binstall
+      run: |
+        curl -L --proto '=https' --tlsv1.2 -sSf \
+          https://raw.githubusercontent.com/cargo-bins/cargo-binstall/main/install-from-binstall-release.sh | \
+          bash
+    - name: install cross
+      run: cargo binstall cross
     - name: checkout audioserve source
       uses: actions/checkout@v3
       with:
@@ -51,19 +58,26 @@ jobs:
       uses: actions/cache@v3
       with:
         path: build
-        key: as0-${{ env.BUILD_TYPE }}-${{ steps.genrel.outputs.release_ref }}
+        key: as1-${{ env.BUILD_TYPE }}-${{ steps.genrel.outputs.release_ref }}
         restore-keys: |
-          as0-${{ env.BUILD_TYPE }}-
-          as0-
+          as1-${{ env.BUILD_TYPE }}-
+          as1-
           as
-    - name: Docker pull
-      run: docker pull ${{ env.REGISTRY }}/${{ env.BUILDER_IMAGE }}:${{ env.BUILDER_TAG }}
-    - name: Docker run
+    - name: build with cross
       run: |
         mkdir -p ./result ./build && \
-        docker run -v ${GITHUB_WORKSPACE}/audioserve-src:/src -v $PWD/build:/build \
-          -v $PWD/result:/result -v $PWD/fixups:/fixups -e CARGO_PROFILE=${{ env.BUILD_TYPE }} \
-          ${{ env.REGISTRY }}/${{ env.BUILDER_IMAGE }}:${{ env.BUILDER_TAG }}
+        cd audioserve-src && \
+        echo -e '[build]\npre-build = [\n  "dpkg --add-architecture $CROSS_DEB_ARCH",\n  "apt-get update && apt-get --assume-yes install libavformat-dev:$CROSS_DEB_ARCH"\n]' >Cross.toml && \
+          CARGO_TARGET_DIR=../build/target && \
+          CARGO_HOME=../build/cargo && \
+            cross build --target=aarch64-unknown-linux-gnu --profile ${{ env.CARGO_PROFILE }} && \
+        cp -av ../build/target/aarch64-unknown-linux-gnu/${{ env.OUTPUT_DIR }}/audioserve ../result
+#    - name: Docker run
+#      run: |
+#        mkdir -p ./result ./build && \
+#        docker run -v ${GITHUB_WORKSPACE}/audioserve-src:/src -v $PWD/build:/build \
+#          -v $PWD/result:/result -v $PWD/fixups:/fixups -e CARGO_PROFILE=${{ env.BUILD_TYPE }} \
+#          ${{ env.REGISTRY }}/${{ env.BUILDER_IMAGE }}:${{ env.BUILDER_TAG }}
     - name: zip results
       run: zip -r audioserve_aarch64.zip result
     - name: Release zip
