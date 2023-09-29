@@ -27,7 +27,7 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
     - name: install rustup
-      run: curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+      run: curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
     - name: install binstall
       run: |
         curl -L --proto '=https' --tlsv1.2 -sSf \
