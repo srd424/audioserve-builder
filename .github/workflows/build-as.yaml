@@ -70,7 +70,7 @@ jobs:
         echo -e '[build]\npre-build = [\n  "dpkg --add-architecture $CROSS_DEB_ARCH",\n  "apt-get update && apt-get --assume-yes install libavformat-dev:$CROSS_DEB_ARCH"\n]' >Cross.toml && \
           CARGO_TARGET_DIR=../build/target && \
           CARGO_HOME=../build/cargo && \
-            cross build --target=aarch64-unknown-linux-gnu --profile ${{ env.CARGO_PROFILE }} && \
+            cross build --target=aarch64-unknown-linux-gnu --profile ${{ env.BUILD_TYPE }} && \
         cp -av ../build/target/aarch64-unknown-linux-gnu/${{ env.OUTPUT_DIR }}/audioserve ../result
 #    - name: Docker run
 #      run: |
