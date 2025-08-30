@@ -15,7 +15,7 @@ jobs:
     - name: Checkout source
       uses: actions/checkout@v2
     - name: Install docker
-      run:  apt-get update && apt-get -y install docker
+      run:  apt-get update && apt-get -y install docker.io
     - name: Build with docker
       run: docker build --tag ${{ env.REGISTRY }}/${{ github.repository }}:${{ env.IMAGE_TAG }} .
     - name: Log in to the Container registry
