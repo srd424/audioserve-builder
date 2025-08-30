@@ -1,8 +1,8 @@
 name: Get latest upstream version
 on:
   workflow_dispatch:
-  schedule:
-    - cron: '0 5 * * *'
+#  schedule:
+#    - cron: '0 5 * * *'
     
 jobs:
   get-version:
