@@ -10,7 +10,7 @@ env:
   
 jobs:
   builder-build:
-    runs-on: codeberg-tiny
+    runs-on: host
     steps:
     - name: Checkout source
       uses: actions/checkout@v2
