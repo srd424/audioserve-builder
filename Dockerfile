@@ -4,6 +4,7 @@ RUN { [ -n "$apt_proxy" ] && echo "Acquire::http::proxy \"$apt_proxy\";" >/etc/a
 COPY sources.list /etc/apt/sources.list
 RUN dpkg --add-architecture arm64 && \
         apt-get update || true
+RUN mv /var/lib/apt/lists/partial/* /var/lib/apt/lists ; apt-get update || true
 RUN apt-get install -y --no-install-recommends eatmydata
 RUN eatmydata apt-get install -y --no-install-recommends \
                 ca-certificates \
