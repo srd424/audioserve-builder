@@ -1,11 +1,10 @@
-FROM ubuntu:oracular AS buildenv
+FROM debian:trixie AS buildenv
 ARG apt_proxy
 RUN { [ -n "$apt_proxy" ] && echo "Acquire::http::proxy \"$apt_proxy\";" >/etc/apt/apt.conf.d/02proxy; } || true
-COPY sources.list /etc/apt/sources.list
-RUN rm /etc/apt/sources.list.d/* && \
-	dpkg --add-architecture arm64 && \
+COPY debian.sources /etc/apt/sources.list.d
+RUN dpkg --add-architecture arm64 && \
         apt-get update || true
-RUN mv /var/lib/apt/lists/partial/* /var/lib/apt/lists ; apt-get update || true
+RUN mv /var/lib/apt/lists/partial/* /var/lib/apt/lists && apt-get update || true
 RUN apt-get install -y --no-install-recommends eatmydata
 RUN eatmydata apt-get install -y --no-install-recommends \
                 ca-certificates \
