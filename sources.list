@@ -1,19 +1,19 @@
-deb [arch=amd64] http://archive.ubuntu.com/ubuntu/ plucky main restricted
+deb [arch=amd64] http://archive.ubuntu.com/ubuntu/ oracular main restricted
 
-deb [arch=amd64] http://archive.ubuntu.com/ubuntu/ plucky-updates main restricted
+deb [arch=amd64] http://archive.ubuntu.com/ubuntu/ oracular-updates main restricted
 
-deb [arch=amd64] http://archive.ubuntu.com/ubuntu/ plucky universe
-deb [arch=amd64] http://archive.ubuntu.com/ubuntu/ plucky-updates universe
+deb [arch=amd64] http://archive.ubuntu.com/ubuntu/ oracular universe
+deb [arch=amd64] http://archive.ubuntu.com/ubuntu/ oracular-updates universe
 
-deb [arch=amd64] http://archive.ubuntu.com/ubuntu/ plucky multiverse
-deb [arch=amd64] http://archive.ubuntu.com/ubuntu/ plucky-updates multiverse
+deb [arch=amd64] http://archive.ubuntu.com/ubuntu/ oracular multiverse
+deb [arch=amd64] http://archive.ubuntu.com/ubuntu/ oracular-updates multiverse
 
-deb [arch=amd64] http://archive.ubuntu.com/ubuntu/ plucky-backports main restricted universe multiverse
+deb [arch=amd64] http://archive.ubuntu.com/ubuntu/ oracular-backports main restricted universe multiverse
 
-deb http://security.ubuntu.com/ubuntu/ plucky-security main restricted
-deb http://security.ubuntu.com/ubuntu/ plucky-security universe
-deb http://security.ubuntu.com/ubuntu/ plucky-security multiverse
+deb http://security.ubuntu.com/ubuntu/ oracular-security main restricted
+deb http://security.ubuntu.com/ubuntu/ oracular-security universe
+deb http://security.ubuntu.com/ubuntu/ oracular-security multiverse
 
 
-deb [arch=arm64] http://ports.ubuntu.com/ubuntu-ports/ plucky main restricted universe
-deb [arch=arm64] http://ports.ubuntu.com/ubuntu-ports/ plucky-updates main restricted universe
+deb [arch=arm64] http://ports.ubuntu.com/ubuntu-ports/ oracular main restricted universe
+deb [arch=arm64] http://ports.ubuntu.com/ubuntu-ports/ oracular-updates main restricted universe
