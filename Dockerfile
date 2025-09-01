@@ -1,4 +1,4 @@
-FROM ubuntu:jammy AS buildenv
+FROM ubuntu:25.04 AS buildenv
 ARG apt_proxy
 RUN { [ -n "$apt_proxy" ] && echo "Acquire::http::proxy \"$apt_proxy\";" >/etc/apt/apt.conf.d/02proxy; } || true
 COPY sources.list /etc/apt/sources.list
