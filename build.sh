@@ -13,6 +13,7 @@ cp -av /src /src.real
 cd /src.real
 
 export PKG_CONFIG_ALLOW_CROSS=1
+export PKG_CONFIG_PATH=/usr/lib/aarch64-linux-gnu/pkgconfig
 export CARGO_TARGET_DIR=/build/target
 export CARGO_HOME=/build/cargo
 export npm_config_cache=/build/npm
